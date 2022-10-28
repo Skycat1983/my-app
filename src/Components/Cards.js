@@ -1,8 +1,11 @@
 import React from 'react'
+import Fetch from './Fetch'
 
 function Cards() {
   return (
-    <div>Cards</div>
+    <div>Cards
+      <Fetch />
+    </div>
   )
 }
 
