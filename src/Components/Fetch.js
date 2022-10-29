@@ -4,14 +4,18 @@ import MultipleInteractionCard from "./MultipleInteractionCard";
 function Fetch() {
 
 const [fetchData, setFetchData] = useState ("");
-const []
+const [gameTitle, setGameTitle] = useState ("");
+const [gamePic, setGamePic] = useState("");
+
+
 
 const fetchN64 = async () => {
   const url = "";
   const response = await fetch(url)
   const result = await response.json()
-  console.log("async rsults", result);
+  console.log("async results", result);
   setFetchData(result.results)
+  setGameTitle(result.results.name)
 }
 
 // type: run once
@@ -20,13 +24,23 @@ useEffect (() => {
 },[])
 
 return (
-  <div><MultipleInteractionCard /></div>
+<>
+  <div><MultipleInteractionCard games = {fetchData}/></div> 
+</>
 )
-
 }
 
 
 export default Fetch
+
+
+// QUESTION: //? part 1: why does the code below not return what i want it to return when executed within the fetchN64 function?
+//!   console.log(result.results.name);
+//? part 2: what do i need to do in future so that i can access specific variables within 
+
+// const [game, setGame] = useState ([]);
+
+
 
 
 

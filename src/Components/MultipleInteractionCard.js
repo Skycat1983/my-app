@@ -8,9 +8,22 @@ import IconButton from '@mui/joy/IconButton';
 import Link from '@mui/joy/Link';
 // import Favorite from '@mui/icons-material/Favorite'; //? WHY CAN"T I LOCATE THIS AND HOW CAN I RESOLVE IT?
 
-export default function MultipleInteractionCard() {
+// SHOULD RUN EVERY TIME NEW FETCH/SEARCH IS MADE
+
+function MultipleInteractionCard(props) { //! props object is [for now only] defined as fetchData in Fetch component
+
+const games = props.games;
+console.log(games);
+// let title = props.games.slug;
+// console.log(title);
+
   return (
-    <Card variant="outlined" sx={{ width: 320 }}>
+<div>
+{games && games.map((game) => { 
+  return <Card key={game.name}/>;
+})}{" "}
+
+<Card variant="outlined" sx={{ width: 320 }}>
       <CardOverflow>
         <AspectRatio ratio="2">
           <img
@@ -39,7 +52,7 @@ export default function MultipleInteractionCard() {
       </CardOverflow>
       <Typography level="h2" sx={{ fontSize: 'md', mt: 2 }}>
         <Link href="#multiple-actions" overlay underline="none">
-          Yosemite National Park
+          hello
         </Link>
       </Typography>
       <Typography level="body2" sx={{ mt: 0.5, mb: 2 }}>
@@ -65,11 +78,20 @@ export default function MultipleInteractionCard() {
         </Typography>
       </CardOverflow>
     </Card>
+
+</div>
   );
+
 }
+
+export default MultipleInteractionCard
 
 // components are made to house reusable template
 
 // data passes to components in form of props
 
 // props allow us to extract different parts of object art different times?
+
+// {games.map((game) => { 
+//   return key={game.name};
+// })}{" "}
