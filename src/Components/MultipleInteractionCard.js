@@ -1,97 +1,160 @@
-import * as React from 'react';
-import AspectRatio from '@mui/joy/AspectRatio';
-import Card from '@mui/joy/Card';
-import CardOverflow from '@mui/joy/CardOverflow';
-import Divider from '@mui/joy/Divider';
-import Typography from '@mui/joy/Typography';
-import IconButton from '@mui/joy/IconButton';
-import Link from '@mui/joy/Link';
-// import Favorite from '@mui/icons-material/Favorite'; //? WHY CAN"T I LOCATE THIS AND HOW CAN I RESOLVE IT?
+//!---------------------
+import * as React from "react";
+import { useEffect, useState } from "react";
+import AspectRatio from "@mui/joy/AspectRatio";
+import Avatar from "@mui/joy/Avatar";
+import Box from "@mui/joy/Box";
+import Card from "@mui/joy/Card";
+import IconButton from "@mui/joy/IconButton";
+import Typography from "@mui/joy/Typography";
+import Link from "@mui/joy/Link";
+import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
+import Favorite from "@mui/icons-material/Favorite"; //? WHY CAN"T I LOCATE THIS AND HOW CAN I RESOLVE IT?
 
-// SHOULD RUN EVERY TIME NEW FETCH/SEARCH IS MADE
-
-function MultipleInteractionCard(props) { //! props object is [for now only] defined as fetchData in Fetch component
-
-const games = props.games;
-console.log(games);
-// let title = props.games.slug;
-// console.log(title);
-
+function MultipleInteractionCard(props) {
   return (
-<div>
-{games && games.map((game) => { 
-  return <Card key={game.name}/>;
-})}{" "}
+    <div>
+      {" "}
+      {props.games &&
+        props.games.map((game) => {
+          return (
+            <Box
+              sx={{
+                minHeight: 350,
+              }}
+              key={game.id}
+            >
+              <a href="/test"> Test </a>{" "}
+              <Card
+                variant="outlined"
+                sx={(theme) => ({
+                  width: 300,
+                  gridColumn: "span 2",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  resize: "horizontal",
+                  overflow: "hidden",
+                  gap: "clamp(0px, (100% - 360px + 32px) * 999, 16px)",
+                  transition: "transform 0.3s, border 0.3s",
+                  "&:hover": {
+                    borderColor: theme.vars.palette.primary.outlinedHoverBorder,
+                    transform: "translateY(-2px)",
+                  },
+                  "& > *": {
+                    minWidth: "clamp(0px, (360px - 100%) * 999,100%)",
+                  },
+                })}
+              >
+                <AspectRatio
+                  variant="soft"
+                  sx={{
+                    flexGrow: 1,
+                    display: "contents",
+                    "--AspectRatio-paddingBottom":
+                      "clamp(0px, (100% - 360px) * 999, min(calc(100% / (16 / 9)), 300px))",
+                  }}
+                >
+                  <img src={game.background_image} loading="lazy" alt="" />
+                </AspectRatio>{" "}
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 2,
+                    maxWidth: 200,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                    }}
+                  >
+                    <div>
+                      <Typography
+                        level="h2"
+                        sx={{
+                          fontSize: "md",
+                        }}
+                        mb={0.5}
+                      >
+                        <Link
+                          href="#container-responsive"
+                          overlay
+                          underline="none"
+                          sx={{
+                            color: "text.primary",
+                            "&.Mui-focusVisible:after": {
+                              outlineOffset: "-4px",
+                            },
+                          }}
+                        >
+                          <b> {game.name} </b>{" "}
+                        </Link>{" "}
+                      </Typography>{" "}
+                      {/* <Typography level="body2">
+                        released: {game.name}{" "}
+                      </Typography>{" "} */}
+                    </div>{" "}
+                    <IconButton
+                      size="sm"
+                      variant="plain"
+                      color="neutral"
+                      sx={{
+                        ml: "auto",
+                        alignSelf: "flex-start",
+                      }}
+                    >
+                      <FavoriteBorderRoundedIcon color="danger" />{" "}
+                    </IconButton>{" "}
+                  </Box>{" "}
+                  <AspectRatio
+                    variant="soft"
+                    sx={{
+                      "--AspectRatio-paddingBottom":
+                        "clamp(0px, (100% - 200px) * 999, 200px)",
+                      pointerEvents: "none",
+                    }}
+                  >
+                    <img alt="" src={game.background_image} />{" "}
+                  </AspectRatio>{" "}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      gap: 1.5,
+                      mt: "auto",
+                    }}
+                  >
+                    <Avatar
+                      size="sm"
+                      src="/static/logo.png"
+                      sx={{
+                        p: 0.5,
+                        border: "2px solid",
+                        borderColor: "background.body",
+                      }}
+                    />{" "}
+                    <div>
+                      {/* <Typography level="body2"> Designed by </Typography>{" "} */}
+                      <Typography fontWeight="lg" level="body2">
+                        sign in for more options{" "}
+                      </Typography>{" "}
+                    </div>{" "}
+                  </Box>{" "}
+                </Box>{" "}
+              </Card>{" "}
+            </Box>
 
-<Card variant="outlined" sx={{ width: 320 }}>
-      <CardOverflow>
-        <AspectRatio ratio="2">
-          <img
-            src="https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?auto=format&fit=crop&w=318"
-            srcSet="https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?auto=format&fit=crop&w=318&dpr=2 2x"
-            loading="lazy"
-            alt=""
-          />
-        </AspectRatio>
-        <IconButton
-          aria-label="Like minimal photography"
-          size="md"
-          variant="solid"
-          color="danger"
-          sx={{
-            position: 'absolute',
-            zIndex: 2,
-            borderRadius: '50%',
-            right: '1rem',
-            bottom: 0,
-            transform: 'translateY(50%)',
-          }}
-        >
-          {/* <Favorite /> */}
-        </IconButton>
-      </CardOverflow>
-      <Typography level="h2" sx={{ fontSize: 'md', mt: 2 }}>
-        <Link href="#multiple-actions" overlay underline="none">
-          hello
-        </Link>
-      </Typography>
-      <Typography level="body2" sx={{ mt: 0.5, mb: 2 }}>
-        <Link href="#multiple-actions">California</Link>
-      </Typography>
-      <Divider inset="context" />
-      <CardOverflow
-        variant="soft"
-        sx={{
-          display: 'flex',
-          gap: 1.5,
-          py: 1.5,
-          px: 'var(--Card-padding)',
-          bgcolor: 'background.level1',
-        }}
-      >
-        <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
-          6.3k views
-        </Typography>
-        <Divider orientation="vertical" />
-        <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
-          1 hour ago
-        </Typography>
-      </CardOverflow>
-    </Card>
-
-</div>
+            // })}{" "} //! previous project card creation had this code at end. not sure why
+          );
+        })}{" "}
+    </div>
   );
-
 }
 
-export default MultipleInteractionCard
+export default MultipleInteractionCard;
 
 // components are made to house reusable template
 
 // data passes to components in form of props
 
 // props allow us to extract different parts of object art different times?
-
-// {games.map((game) => { 
-//   return key={game.name};
-// })}{" "}
